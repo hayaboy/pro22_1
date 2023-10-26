@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+
+	<!-- context(pro22)가 로딩될 때의 이벤트 감지 -->
+	<!-- DB 설정 파일을 불러오기 위한 위치를 컨텍스트 로더 리스너에 등록 -->
+
+	<listener>
+
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+
+	</listener>
+
+
+
+	<!-- 컨텍스트가 가지고 있을 매개변수로 DB 설정 경로를 넣어놈 -->
+
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name> <!-- 수정시 에러남  -->		
+		<param-value>
+  			/WEB-INF/config/action-dataSource.xml
+			/WEB-INF/config/action-service.xml
+  </param-value>
+	</context-param>
+
+
+
+
+
+
+
+
+
+	<!-- HTTP 요청 핸들러/컨트롤러를 위한 중앙 디스패처 웹 UI 컨트롤러 또는 HTTP 기반 원격 서비스 내보내기의 경우. 
+		편리한 매핑 및 예외 처리 기능을 제공하여 웹 요청을 처리하기 위해 등록된 처리기로 디스패치합니다. DispatcherServlet은 
+		실제 서블릿(HttpServlet 기본 클래스에서 상속됨)이므로 웹 애플리케이션의 web.xml에서 선언됩니다. DispatcherServlet이 
+		처리하기를 원하는 요청은 동일한 web.xml 파일에서 URL 매핑을 사용하여 매핑되어야 합니다. -->
+
+	<!-- 디스패처 서블릿 -->
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup> <!-- 값이 1이상이면 톰캣 실행시 DispatcherServlet을 미리 메모리에 로드함 -->
+	</servlet>
+
+
+	<!-- 리퀘스트 URL 요청 패턴 -->
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+</web-app>

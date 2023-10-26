@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+<!-- 
+로컬 속성 및/또는 시스템 속성 및 환경 변수에 대해 ${...} 자리 표시자를 확인하는 
+PlaceholderConfigurerSupport 하위 클래스입니다.
+ -->
+<!-- ${...} placeholders 만들어서 값을 넣어주도록 함 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/config/jdbc.properties</value>
+			</list>
+		</property>
+		
+		
+		</bean>
+
+<!--
+표준 JDBC DataSource 인터페이스의 간단한 구현, Bean 속성을 통해 일반 기존 JDBC 드라이버 구성 및 
+모든 getConnection 호출에서 새 연결 반환.
+  -->
+<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+
+<property name="driverClass" value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+
+</bean>
+
+
+
+  <bean  id="memberDAO"   class="com.spring.member.dao.MemberDAOImpl" >
+      <property name="dataSource" ref="dataSource"  />
+   </bean> 
+
+
+
+
+
+
+
+
+
+</beans>
